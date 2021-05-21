@@ -1,0 +1,12 @@
+public class HuobiClient {
+
+    HuobiAuth auth;
+
+    public HuobiClient(){
+        super();
+    }
+    public HuobiClient(String apiKey, String secretKey){
+        auth = new HuobiAuth(apiKey,secretKey);
+    }
+
+}
