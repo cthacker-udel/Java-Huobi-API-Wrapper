@@ -2,6 +2,7 @@ package Client;
 
 import Controller.MarketDataAPI.SwapContractInfo.SwapContractInfo;
 import Controller.MarketDataAPI.SwapIndexPrice.SwapIndexPrice;
+import Controller.MarketDataAPI.SwapPriceLimit.SwapPriceLimit;
 import Controller.ServerAPI.ServerStatus.ServerHeartbeat;
 import Controller.ServerAPI.ServerStatus.ServerStatus;
 import Controller.ServerAPI.ServerStatus.ServerTimestamp;
@@ -125,6 +126,26 @@ public class HuobiRestAPI {
         return response.body();
 
     }
+
+    public SwapPriceLimit querySwapPriceLimit(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-api/v1/swap_price_limit/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        marketInterface marketInterface = retrofit.create(InterfaceModel.marketInterface.class);
+
+        Call<SwapPriceLimit> call = marketInterface.querySwapPriceLimit(client.getMarket().generateQueryParams());
+
+        Response<SwapPriceLimit> response = call.execute();
+
+        return response.body();
+    }
+
+
 
 
 

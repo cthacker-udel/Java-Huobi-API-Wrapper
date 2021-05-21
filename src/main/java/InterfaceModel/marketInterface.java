@@ -2,6 +2,7 @@ package InterfaceModel;
 
 import Controller.MarketDataAPI.SwapContractInfo.SwapContractInfo;
 import Controller.MarketDataAPI.SwapIndexPrice.SwapIndexPrice;
+import Controller.MarketDataAPI.SwapPriceLimit.SwapPriceLimit;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
@@ -15,5 +16,8 @@ public interface marketInterface {
 
     @GET("https://api.hbdm.com/swap-api/v1/swap_index")
     Call<SwapIndexPrice> querySwapIndexPrice(@QueryMap TreeMap<String,Object> queries);
+
+    @GET("https://api.hbdm.com/swap-api/v1/swap_price_limit")
+    Call<SwapPriceLimit> querySwapPriceLimit(@QueryMap TreeMap<String,Object> queries);
 
 }
