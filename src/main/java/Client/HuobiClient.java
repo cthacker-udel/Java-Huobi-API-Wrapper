@@ -1,3 +1,5 @@
+package Client;
+
 public class HuobiClient extends HuobiRestAPI{
 
     HuobiAuth auth;
