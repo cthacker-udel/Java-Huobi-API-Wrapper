@@ -1,5 +1,6 @@
 package Client;
 
+import Controller.MarketDataAPI.MarketBBO.MarketBBO;
 import Controller.MarketDataAPI.MarketDepth.MarketDepth;
 import Controller.MarketDataAPI.SwapContractInfo.SwapContractInfo;
 import Controller.MarketDataAPI.SwapIndexPrice.SwapIndexPrice;
@@ -181,6 +182,25 @@ public class HuobiRestAPI {
         Call<MarketDepth> call = marketInterface.queryMarketDepth(client.getMarket().generateQueryParams());
 
         Response<MarketDepth> response = call.execute();
+
+        return response.body();
+
+    }
+
+    public MarketBBO getMarketBBOData(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-ex/market/bbo/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        marketInterface marketInterface = retrofit.create(InterfaceModel.marketInterface.class);
+
+        Call<MarketBBO> call = marketInterface.queryMarketBBO(client.getMarket().generateQueryParams());
+
+        Response<MarketBBO> response = call.execute();
 
         return response.body();
 
