@@ -1,5 +1,6 @@
 package InterfaceModel;
 
+import Controller.MarketDataAPI.MarketDepth.MarketDepth;
 import Controller.MarketDataAPI.SwapContractInfo.SwapContractInfo;
 import Controller.MarketDataAPI.SwapIndexPrice.SwapIndexPrice;
 import Controller.MarketDataAPI.SwapInterestInfo.SwapInterestInfo;
@@ -23,5 +24,8 @@ public interface marketInterface {
 
     @GET("https://api.hbdm.com/swap-api/v1/swap_open_interest")
     Call<SwapInterestInfo> querySwapInterestInfo(@QueryMap TreeMap<String,Object> queries);
+
+    @GET("https://api.hbdm.com/swap-ex/market/depth")
+    Call<MarketDepth> queryMarketDepth(@QueryMap TreeMap<String,Object> queries);
 
 }

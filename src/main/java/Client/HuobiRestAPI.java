@@ -1,5 +1,6 @@
 package Client;
 
+import Controller.MarketDataAPI.MarketDepth.MarketDepth;
 import Controller.MarketDataAPI.SwapContractInfo.SwapContractInfo;
 import Controller.MarketDataAPI.SwapIndexPrice.SwapIndexPrice;
 import Controller.MarketDataAPI.SwapInterestInfo.SwapInterestInfo;
@@ -160,6 +161,26 @@ public class HuobiRestAPI {
         Call<SwapInterestInfo> call = marketInterface.querySwapInterestInfo(client.getMarket().generateQueryParams());
 
         Response<SwapInterestInfo> response = call.execute();
+
+        return response.body();
+
+    }
+
+
+    public MarketDepth getMarketDepth(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-ex/market/depth/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        marketInterface marketInterface = retrofit.create(InterfaceModel.marketInterface.class);
+
+        Call<MarketDepth> call = marketInterface.queryMarketDepth(client.getMarket().generateQueryParams());
+
+        Response<MarketDepth> response = call.execute();
 
         return response.body();
 
