@@ -30,6 +30,8 @@ public class HuobiAuth extends HuobiClient{
 
     static final ZoneId ZONE_GMT = ZoneId.of("Z");
 
+
+    // uri is baseUrl + endpoint, the url you craft before constructing retrofit but without the ending /
     public String createSignature(String method, String uri,
                                 Map<String, Object> params) {
         StringBuilder sb = new StringBuilder(1024);
