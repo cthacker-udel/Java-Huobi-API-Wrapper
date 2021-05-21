@@ -4,6 +4,7 @@ import Controller.MarketDataAPI.KlineData.KlineData;
 import Controller.MarketDataAPI.KlineData.MarkPrice.MarkPrice;
 import Controller.MarketDataAPI.MarketBBO.MarketBBO;
 import Controller.MarketDataAPI.MarketDepth.MarketDepth;
+import Controller.MarketDataAPI.MarketOverview.MarketOverview;
 import Controller.MarketDataAPI.SwapContractInfo.SwapContractInfo;
 import Controller.MarketDataAPI.SwapIndexPrice.SwapIndexPrice;
 import Controller.MarketDataAPI.SwapInterestInfo.SwapInterestInfo;
@@ -39,5 +40,8 @@ public interface marketInterface {
 
     @GET("https://api.hbdm.com/index/market/history/swap_mark_price_kline")
     Call<MarkPrice> queryKlineMarkPrice(@QueryMap TreeMap<String,Object> queries);
+
+    @GET("https://api.hbdm.com/swap-ex/market/detail/merged")
+    Call<MarketOverview> queryMarketOverview(@QueryMap TreeMap<String,Object> queries);
 
 }

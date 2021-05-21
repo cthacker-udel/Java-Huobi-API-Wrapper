@@ -4,6 +4,7 @@ import Controller.MarketDataAPI.KlineData.KlineData;
 import Controller.MarketDataAPI.KlineData.MarkPrice.MarkPrice;
 import Controller.MarketDataAPI.MarketBBO.MarketBBO;
 import Controller.MarketDataAPI.MarketDepth.MarketDepth;
+import Controller.MarketDataAPI.MarketOverview.MarketOverview;
 import Controller.MarketDataAPI.SwapContractInfo.SwapContractInfo;
 import Controller.MarketDataAPI.SwapIndexPrice.SwapIndexPrice;
 import Controller.MarketDataAPI.SwapInterestInfo.SwapInterestInfo;
@@ -243,6 +244,26 @@ public class HuobiRestAPI {
         Response<MarkPrice> response = call.execute();
 
         return response.body();
+
+    }
+
+    public MarketOverview queryMarketDataOverview(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-ex/market/detail/merged/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        marketInterface marketInterface = retrofit.create(InterfaceModel.marketInterface.class);
+
+        Call<MarketOverview> call = marketInterface.queryMarketOverview(client.getMarket().generateQueryParams());
+
+        Response<MarketOverview> response = call.execute();
+
+        return response.body();
+
     }
 
 
