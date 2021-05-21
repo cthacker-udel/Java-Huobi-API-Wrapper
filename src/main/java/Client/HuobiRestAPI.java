@@ -1,5 +1,6 @@
 package Client;
 
+import Controller.MarketDataAPI.KlineData.KlineData;
 import Controller.MarketDataAPI.MarketBBO.MarketBBO;
 import Controller.MarketDataAPI.MarketDepth.MarketDepth;
 import Controller.MarketDataAPI.SwapContractInfo.SwapContractInfo;
@@ -201,6 +202,25 @@ public class HuobiRestAPI {
         Call<MarketBBO> call = marketInterface.queryMarketBBO(client.getMarket().generateQueryParams());
 
         Response<MarketBBO> response = call.execute();
+
+        return response.body();
+
+    }
+
+    public KlineData queryMarketKlineData(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-ex/market/history/kline/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        marketInterface marketInterface = retrofit.create(InterfaceModel.marketInterface.class);
+
+        Call<KlineData> call = marketInterface.queryKlineData(client.getMarket().generateQueryParams());
+
+        Response<KlineData> response = call.execute();
 
         return response.body();
 

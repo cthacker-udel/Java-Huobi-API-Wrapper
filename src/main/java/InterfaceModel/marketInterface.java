@@ -1,5 +1,6 @@
 package InterfaceModel;
 
+import Controller.MarketDataAPI.KlineData.KlineData;
 import Controller.MarketDataAPI.MarketBBO.MarketBBO;
 import Controller.MarketDataAPI.MarketDepth.MarketDepth;
 import Controller.MarketDataAPI.SwapContractInfo.SwapContractInfo;
@@ -31,5 +32,8 @@ public interface marketInterface {
 
     @GET("https://api.hbdm.com/swap-ex/market/bbo")
     Call<MarketBBO> queryMarketBBO(@QueryMap TreeMap<String,Object> queries);
+
+    @GET("https://api.hbdm.com/swap-ex/market/history/kline")
+    Call<KlineData> queryKlineData(@QueryMap TreeMap<String,Object> queries);
 
 }
