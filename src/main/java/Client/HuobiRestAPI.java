@@ -326,6 +326,12 @@ public class HuobiRestAPI {
         return response.body();
     }
 
+    /*
+
+    Account API
+
+     */
+
 
 
 
