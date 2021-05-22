@@ -266,6 +266,21 @@ public class HuobiRestAPI {
 
     }
 
+    public void queryMarketDataOverviewBatch(HuobiClient client){
+
+        String url = baseUrl + "/swap-ex/market/detail/batch_merged/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        marketInterface marketInterface = retrofit.create(InterfaceModel.marketInterface.class);
+
+
+
+    }
+
 
 
 
