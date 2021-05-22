@@ -1,5 +1,6 @@
 package Client;
 
+import Controller.AccountAPI.AssetValuation.AssetValuation;
 import Controller.MarketDataAPI.ContractTradeRecordBatch.ContractTradeRecordBatch;
 import Controller.MarketDataAPI.KlineData.KlineData;
 import Controller.MarketDataAPI.KlineData.MarkPrice.MarkPrice;
@@ -23,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import InterfaceModel.*;
 
 import java.io.IOException;
+import java.util.TreeMap;
 
 public class HuobiRestAPI {
 
@@ -331,6 +333,30 @@ public class HuobiRestAPI {
     Account API
 
      */
+    
+    public AssetValuation queryAssetValuation(HuobiClient client) throws IOException {
+        
+        String url = baseUrl + "/swap-api/v1/swap_balance_valuation/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        accountInterface accountInterface = retrofit.create(InterfaceModel.accountInterface.class);
+
+        TreeMap<String,Object> queries = client.getAccount().generate_queries();
+
+        queries.put("signature",client.getAuth().createSignature("POST","https://api.hbdm.com/swap-api/v1/swap_balance_valuation",queries));
+
+        Call<AssetValuation> call = accountInterface.queryAssetValuation(queries);
+
+
+        Response<AssetValuation> response = call.execute();
+
+        return response.body();
+
+    }
 
 
 
