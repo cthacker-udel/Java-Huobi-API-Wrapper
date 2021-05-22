@@ -4,6 +4,7 @@ import Controller.MarketDataAPI.KlineData.KlineData;
 import Controller.MarketDataAPI.KlineData.MarkPrice.MarkPrice;
 import Controller.MarketDataAPI.MarketBBO.MarketBBO;
 import Controller.MarketDataAPI.MarketDepth.MarketDepth;
+import Controller.MarketDataAPI.MarketOverview.Batch.MarketDataOverviewBatch;
 import Controller.MarketDataAPI.MarketOverview.MarketOverview;
 import Controller.MarketDataAPI.SwapContractInfo.SwapContractInfo;
 import Controller.MarketDataAPI.SwapIndexPrice.SwapIndexPrice;
@@ -266,7 +267,7 @@ public class HuobiRestAPI {
 
     }
 
-    public void queryMarketDataOverviewBatch(HuobiClient client){
+    public MarketDataOverviewBatch queryMarketDataOverviewBatch(HuobiClient client) throws IOException {
 
         String url = baseUrl + "/swap-ex/market/detail/batch_merged/";
 
@@ -277,7 +278,11 @@ public class HuobiRestAPI {
 
         marketInterface marketInterface = retrofit.create(InterfaceModel.marketInterface.class);
 
+        Call<MarketDataOverviewBatch> call = marketInterface.queryMarketOverviewBatch(client.getMarket().generateQueryParams());
 
+        Response<MarketDataOverviewBatch> response = call.execute();
+
+        return response.body();
 
     }
 
