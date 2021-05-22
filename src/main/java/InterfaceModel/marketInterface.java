@@ -2,6 +2,7 @@ package InterfaceModel;
 
 import Controller.MarketDataAPI.KlineData.KlineData;
 import Controller.MarketDataAPI.KlineData.MarkPrice.MarkPrice;
+import Controller.MarketDataAPI.LastContractTrade.LastContractTrade;
 import Controller.MarketDataAPI.MarketBBO.MarketBBO;
 import Controller.MarketDataAPI.MarketDepth.MarketDepth;
 import Controller.MarketDataAPI.MarketOverview.Batch.MarketDataOverviewBatch;
@@ -47,5 +48,8 @@ public interface marketInterface {
 
     @GET("https://api.hbdm.com/swap-ex/market/detail/batch_merged")
     Call<MarketDataOverviewBatch> queryMarketOverviewBatch(@QueryMap TreeMap<String,Object> queries);
+
+    @GET("https://api.hbdm.com/swap-ex/market/trade")
+    Call<LastContractTrade> queryLastContractTrade(@QueryMap TreeMap<String,Object> queries);
 
 }

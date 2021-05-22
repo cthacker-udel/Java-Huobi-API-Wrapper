@@ -2,6 +2,7 @@ package Client;
 
 import Controller.MarketDataAPI.KlineData.KlineData;
 import Controller.MarketDataAPI.KlineData.MarkPrice.MarkPrice;
+import Controller.MarketDataAPI.LastContractTrade.LastContractTrade;
 import Controller.MarketDataAPI.MarketBBO.MarketBBO;
 import Controller.MarketDataAPI.MarketDepth.MarketDepth;
 import Controller.MarketDataAPI.MarketOverview.Batch.MarketDataOverviewBatch;
@@ -281,6 +282,25 @@ public class HuobiRestAPI {
         Call<MarketDataOverviewBatch> call = marketInterface.queryMarketOverviewBatch(client.getMarket().generateQueryParams());
 
         Response<MarketDataOverviewBatch> response = call.execute();
+
+        return response.body();
+
+    }
+
+    public LastContractTrade queryLastContractTrade(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-ex/market/trade/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        marketInterface marketInterface = retrofit.create(InterfaceModel.marketInterface.class);
+
+        Call<LastContractTrade> call = marketInterface.queryLastContractTrade(client.getMarket().generateQueryParams());
+
+        Response<LastContractTrade> response = call.execute();
 
         return response.body();
 
