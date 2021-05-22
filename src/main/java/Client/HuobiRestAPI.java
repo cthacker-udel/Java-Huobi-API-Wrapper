@@ -1,5 +1,6 @@
 package Client;
 
+import Controller.MarketDataAPI.ContractTradeRecordBatch.ContractTradeRecordBatch;
 import Controller.MarketDataAPI.KlineData.KlineData;
 import Controller.MarketDataAPI.KlineData.MarkPrice.MarkPrice;
 import Controller.MarketDataAPI.LastContractTrade.LastContractTrade;
@@ -305,6 +306,28 @@ public class HuobiRestAPI {
         return response.body();
 
     }
+
+
+    public ContractTradeRecordBatch queryContractTradeRecordHistory(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-ex/market/history/trade/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        marketInterface marketInterface = retrofit.create(InterfaceModel.marketInterface.class);
+
+        Call<ContractTradeRecordBatch> call = marketInterface.queryContractTradeRecordBatch(client.getMarket().generateQueryParams());
+
+        Response<ContractTradeRecordBatch> response = call.execute();
+
+        return response.body();
+    }
+
+
+
 
 
 

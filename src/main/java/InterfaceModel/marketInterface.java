@@ -1,5 +1,6 @@
 package InterfaceModel;
 
+import Controller.MarketDataAPI.ContractTradeRecordBatch.ContractTradeRecordBatch;
 import Controller.MarketDataAPI.KlineData.KlineData;
 import Controller.MarketDataAPI.KlineData.MarkPrice.MarkPrice;
 import Controller.MarketDataAPI.LastContractTrade.LastContractTrade;
@@ -51,5 +52,8 @@ public interface marketInterface {
 
     @GET("https://api.hbdm.com/swap-ex/market/trade")
     Call<LastContractTrade> queryLastContractTrade(@QueryMap TreeMap<String,Object> queries);
+
+    @GET("https://api.hbdm.com/swap-ex/market/history/trade")
+    Call<ContractTradeRecordBatch> queryContractTradeRecordBatch(@QueryMap TreeMap<String,Object> queries);
 
 }
