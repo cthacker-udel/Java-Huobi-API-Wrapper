@@ -1,5 +1,6 @@
 package Client;
 
+import Controller.AccountAPI.AccountInformation.AccountInformation;
 import Controller.AccountAPI.AssetValuation.AssetValuation;
 import Controller.MarketDataAPI.ContractTradeRecordBatch.ContractTradeRecordBatch;
 import Controller.MarketDataAPI.KlineData.KlineData;
@@ -353,6 +354,30 @@ public class HuobiRestAPI {
 
 
         Response<AssetValuation> response = call.execute();
+
+        return response.body();
+
+    }
+
+
+    public AccountInformation queryAccountInformation(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-api/v1/swap_account_info/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        accountInterface accountInterface = retrofit.create(InterfaceModel.accountInterface.class);
+
+        TreeMap<String,Object> queries = client.getAccount().generate_queries();
+
+        queries.put("signature",client.getAuth().createSignature("POST","https://api.hbdm.com/swap-api/v1/swap_account_info",queries));
+
+        Call<AccountInformation> call = accountInterface.queryAccountInformation(queries);
+
+        Response<AccountInformation> response = call.execute();
 
         return response.body();
 
