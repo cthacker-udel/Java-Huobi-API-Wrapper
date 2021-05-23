@@ -2,12 +2,14 @@ package Client;
 
 import ClientModel.Account;
 import ClientModel.Market;
+import ClientModel.Trade;
 
 public class HuobiClient extends HuobiRestAPI{
 
     HuobiAuth auth;
     Market market;
     Account account;
+    Trade trade;
 
     public HuobiClient(){
         super();
@@ -17,6 +19,15 @@ public class HuobiClient extends HuobiRestAPI{
         auth = new HuobiAuth(apiKey,secretKey);
         market = new Market();
         account = new Account();
+        trade = new Trade();
+    }
+
+    public Trade getTrade() {
+        return trade;
+    }
+
+    public void setTrade(Trade trade) {
+        this.trade = trade;
     }
 
     public Account getAccount() {
