@@ -1,7 +1,9 @@
 package Client;
 
+import Controller.AccountAPI.AccountAssetInformation.AccountAssetInformation;
 import Controller.AccountAPI.AccountInformation.AccountInformation;
 import Controller.AccountAPI.AssetValuation.AssetValuation;
+import Controller.AccountAPI.PositionInformation.AccountPositionInformation;
 import Controller.MarketDataAPI.ContractTradeRecordBatch.ContractTradeRecordBatch;
 import Controller.MarketDataAPI.KlineData.KlineData;
 import Controller.MarketDataAPI.KlineData.MarkPrice.MarkPrice;
@@ -378,6 +380,52 @@ public class HuobiRestAPI {
         Call<AccountInformation> call = accountInterface.queryAccountInformation(queries);
 
         Response<AccountInformation> response = call.execute();
+
+        return response.body();
+
+    }
+
+    public AccountPositionInformation queryUserPositionInformation(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-api/v1/swap_position_info/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        accountInterface accountInterface = retrofit.create(InterfaceModel.accountInterface.class);
+
+        TreeMap<String,Object> queries = client.getAccount().generate_queries();
+
+        queries.put("signature",client.getAuth().createSignature("POST","https://api.hbdm.com/swap-api/v1/swap_position_info",queries));
+
+        Call<AccountPositionInformation> call = accountInterface.queryAccountPositionInformation(queries);
+
+        Response<AccountPositionInformation> response = call.execute();
+
+        return response.body();
+
+    }
+
+    public AccountAssetInformation queryUserAssets(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-api/v1/swap_account_position_info/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        accountInterface accountInterface = retrofit.create(InterfaceModel.accountInterface.class);
+
+        TreeMap<String,Object> queries = client.getAccount().generate_queries();
+
+        queries.put("signature",client.getAuth().createSignature("POST","https://api.hbdm.com/swap-api/v1/swap_account_position_info",queries));
+
+        Call<AccountAssetInformation> call = accountInterface.queryAccountAssetInformation(queries);
+
+        Response<AccountAssetInformation> response = call.execute();
 
         return response.body();
 
