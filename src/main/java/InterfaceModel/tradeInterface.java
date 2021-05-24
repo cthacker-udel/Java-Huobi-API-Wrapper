@@ -1,6 +1,7 @@
 package InterfaceModel;
 
 import Controller.TradeAPI.BatchOrder.BatchOrder;
+import Controller.TradeAPI.CancelOrder.CancelOrder;
 import Controller.TradeAPI.PlaceOrder.PlaceOrder;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -16,5 +17,8 @@ public interface tradeInterface {
 
     @POST("https://api.hbdm.com/swap-api/v1/swap_batchorder")
     Call<BatchOrder> placeBatchOrder(@Body TreeMap<String,Object> queries);
+
+    @POST("https://api.hbdm.com/swap-api/v1/swap_cancel")
+    Call<CancelOrder> cancelOrder(@Body TreeMap<String,Object> queries);
 
 }

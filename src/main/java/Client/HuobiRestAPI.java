@@ -487,6 +487,25 @@ public class HuobiRestAPI {
 
     }
 
+    public void cancelOrder(HuobiClient client){
+
+        String url = baseUrl + "/swap-api/v1/swap_cancel/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        tradeInterface tradeInterface = retrofit.create(InterfaceModel.tradeInterface.class);
+
+        TreeMap<String,Object> queries = client.getTrade().generateQueries();
+
+        queries.put("signature",client.getAuth().createSignature("POST","https://api.hbdm.com/swap-api/v1/swap_cancel",queries));
+
+
+
+    }
+
 
 
 
