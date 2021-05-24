@@ -22,6 +22,7 @@ import Controller.ServerAPI.ServerStatus.ServerTimestamp;
 import Controller.TradeAPI.BatchOrder.BatchOrder;
 import Controller.TradeAPI.CancelOrder.CancelOrder;
 import Controller.TradeAPI.OrderDetailsAcquisition.OrderDetailsAcquisition;
+import Controller.TradeAPI.OrderDetailsAcquisition.UnfilledOrder.UnfilledOrder;
 import Controller.TradeAPI.OrderInfo.OrderInfo;
 import Controller.TradeAPI.PlaceOrder.PlaceOrder;
 import retrofit2.Call;
@@ -582,6 +583,29 @@ public class HuobiRestAPI {
         Call<OrderDetailsAcquisition> call = tradeInterface.getOrderDetailsAcquisition(queries);
 
         Response<OrderDetailsAcquisition> response = call.execute();
+
+        return response.body();
+
+    }
+
+    public UnfilledOrder getCurrentUnfilledOrderAcquisitions(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-api/v1/swap_openorders/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        tradeInterface tradeInterface = retrofit.create(InterfaceModel.tradeInterface.class);
+
+        TreeMap<String,Object> queries = client.getTrade().generateQueries();
+
+        queries.put("signature",client.getAuth().createSignature("POST","https://api.hbdm.com/swap-api/v1/swap_openorders",queries));
+
+        Call<UnfilledOrder> call = tradeInterface.getUnfilledOrderAcquisition(queries);
+
+        Response<UnfilledOrder> response = call.execute();
 
         return response.body();
 

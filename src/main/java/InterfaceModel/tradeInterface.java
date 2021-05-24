@@ -3,6 +3,7 @@ package InterfaceModel;
 import Controller.TradeAPI.BatchOrder.BatchOrder;
 import Controller.TradeAPI.CancelOrder.CancelOrder;
 import Controller.TradeAPI.OrderDetailsAcquisition.OrderDetailsAcquisition;
+import Controller.TradeAPI.OrderDetailsAcquisition.UnfilledOrder.UnfilledOrder;
 import Controller.TradeAPI.OrderInfo.OrderInfo;
 import Controller.TradeAPI.PlaceOrder.PlaceOrder;
 import retrofit2.Call;
@@ -31,5 +32,8 @@ public interface tradeInterface {
 
     @POST("https://api.hbdm.com/swap-api/v1/swap_order_detail")
     Call<OrderDetailsAcquisition> getOrderDetailsAcquisition(@Body TreeMap<String,Object> queries);
+
+    @POST("https://api.hbdm.com/swap-api/v1/swap_openorders")
+    Call<UnfilledOrder> getUnfilledOrderAcquisition(@Body TreeMap<String,Object> queries);
 
 }

@@ -28,6 +28,8 @@ public class Trade extends HuobiClient {
     private Integer orderType;
     private Integer pageIndex;
     private Integer pageSize;
+    private String sortBy;
+    private Integer tradeType;
 
 
     public TreeMap<String,Object> generateQueries(){
@@ -93,6 +95,12 @@ public class Trade extends HuobiClient {
         if(this.pageSize != null){
             queries.put("page_size",this.pageSize);
         }
+        if(this.sortBy != null){
+            queries.put("sort_by",this.sortBy);
+        }
+        if(this.tradeType != null){
+            queries.put("trade_type",this.tradeType);
+        }
         return queries;
     }
 
@@ -118,7 +126,8 @@ public class Trade extends HuobiClient {
         this.orderType= null;
         this.pageIndex= null;
         this.pageSize= null;
-
+        this.sortBy = null;
+        this.tradeType = null;
     }
 
     public String getContractCode() {
