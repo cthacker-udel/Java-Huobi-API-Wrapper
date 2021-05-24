@@ -19,6 +19,7 @@ import Controller.MarketDataAPI.SwapPriceLimit.SwapPriceLimit;
 import Controller.ServerAPI.ServerStatus.ServerHeartbeat;
 import Controller.ServerAPI.ServerStatus.ServerStatus;
 import Controller.ServerAPI.ServerStatus.ServerTimestamp;
+import Controller.TradeAPI.BatchOrder.BatchOrder;
 import Controller.TradeAPI.PlaceOrder.PlaceOrder;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -457,6 +458,30 @@ public class HuobiRestAPI {
         Call<PlaceOrder> call = tradeInterface.placeOrder(queries);
 
         Response<PlaceOrder> response = call.execute();
+
+        return response.body();
+
+    }
+
+
+    public BatchOrder placeBatchOrder(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-api/v1/swap_batchorder/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        tradeInterface tradeInterface = retrofit.create(tradeInterface.class);
+
+        TreeMap<String,Object> queries = client.getTrade().generateQueries();
+
+        queries.put("signature",client.getAuth().createSignature("POST","https://api.hbdm.com/swap-api/v1/swap_batchorder",queries));
+
+        Call<BatchOrder> call = tradeInterface.placeBatchOrder(queries);
+
+        Response<BatchOrder> response = call.execute();
 
         return response.body();
 
