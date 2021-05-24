@@ -21,4 +21,7 @@ public interface tradeInterface {
     @POST("https://api.hbdm.com/swap-api/v1/swap_cancel")
     Call<CancelOrder> cancelOrder(@Body TreeMap<String,Object> queries);
 
+    @POST("https://api.hbdm.com/swap-api/v1/swap_cancelall")
+    Call<CancelOrder> cancelAllOrders(@Body TreeMap<String,Object> queries);
+
 }
