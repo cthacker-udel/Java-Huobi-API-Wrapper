@@ -21,6 +21,7 @@ import Controller.ServerAPI.ServerStatus.ServerStatus;
 import Controller.ServerAPI.ServerStatus.ServerTimestamp;
 import Controller.TradeAPI.BatchOrder.BatchOrder;
 import Controller.TradeAPI.CancelOrder.CancelOrder;
+import Controller.TradeAPI.OrderDetailsAcquisition.OrderDetailsAcquisition;
 import Controller.TradeAPI.OrderInfo.OrderInfo;
 import Controller.TradeAPI.PlaceOrder.PlaceOrder;
 import retrofit2.Call;
@@ -30,6 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import InterfaceModel.*;
 
+import javax.print.DocFlavor;
 import java.io.IOException;
 import java.util.TreeMap;
 
@@ -541,7 +543,7 @@ public class HuobiRestAPI {
 
     public OrderInfo getOrderInformation(HuobiClient client) throws IOException {
 
-        String url = baseUrl + "/swap-api/v1/swap_order_info";
+        String url = baseUrl + "/swap-api/v1/swap_order_info/";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
@@ -557,6 +559,29 @@ public class HuobiRestAPI {
         Call<OrderInfo> call = tradeInterface.getOrderInfo(queries);
 
         Response<OrderInfo> response = call.execute();
+
+        return response.body();
+
+    }
+
+    public OrderDetailsAcquisition getOrderDetails(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-api/v1/swap_order_detail/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        tradeInterface tradeInterface = retrofit.create(InterfaceModel.tradeInterface.class);
+
+        TreeMap<String,Object> queries = client.getTrade().generateQueries();
+
+        queries.put("signature",client.getAuth().createSignature("POST","https://api.hbdm.com/swap-api/v1/swap_order_detail",queries));
+
+        Call<OrderDetailsAcquisition> call = tradeInterface.getOrderDetailsAcquisition(queries);
+
+        Response<OrderDetailsAcquisition> response = call.execute();
 
         return response.body();
 

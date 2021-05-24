@@ -24,6 +24,10 @@ public class Trade extends HuobiClient {
     private String slOrderPriceType;
     private List<Object> orders_data = new LinkedList<>();
     private String orderId;
+    private Long createdAt;
+    private Integer orderType;
+    private Integer pageIndex;
+    private Integer pageSize;
 
 
     public TreeMap<String,Object> generateQueries(){
@@ -77,7 +81,44 @@ public class Trade extends HuobiClient {
         if(this.orderId != null){
             queries.put("order_id", this.orderId);
         }
+        if(this.createdAt != null){
+            queries.put("created_at",this.createdAt);
+        }
+        if(this.orderType != null){
+            queries.put("order_type",this.orderType);
+        }
+        if(this.pageIndex != null){
+            queries.put("page_index",this.pageIndex);
+        }
+        if(this.pageSize != null){
+            queries.put("page_size",this.pageSize);
+        }
         return queries;
+    }
+
+    public void clearQueries(){
+
+        this.contractCode= null;
+        this.clientOrderId= null;
+        this.price= null;
+        this.volume= null;
+        this.direction= null;
+        this.offset= null;
+        this.leverRate= null;
+        this.orderPriceType= null;
+        this.tpTriggerPrice= null;
+        this.tpOrderPrice= null;
+        this.tpOrderPriceType= null;
+        this.slTriggerPrice= null;
+        this.slOrderPrice= null;
+        this.slOrderPriceType= null;
+        this.orders_data = new LinkedList<>();
+        this.orderId= null;
+        this.createdAt= null;
+        this.orderType= null;
+        this.pageIndex= null;
+        this.pageSize= null;
+
     }
 
     public String getContractCode() {
