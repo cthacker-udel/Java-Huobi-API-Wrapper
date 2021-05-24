@@ -2,6 +2,8 @@ package ClientModel;
 
 import Client.HuobiClient;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeMap;
 
 public class Trade extends HuobiClient {
@@ -20,6 +22,8 @@ public class Trade extends HuobiClient {
     private Double slTriggerPrice;
     private Double slOrderPrice;
     private String slOrderPriceType;
+    private List<Object> orders_data = new LinkedList<>();
+    private String orderId;
 
 
     public TreeMap<String,Object> generateQueries(){
@@ -66,6 +70,12 @@ public class Trade extends HuobiClient {
         }
         if(this.slOrderPriceType != null){
             queries.put("sl_order_price_type",this.slOrderPriceType);
+        }
+        if(this.orders_data.size() > 0){
+            queries.put("orders_data",this.orders_data);
+        }
+        if(this.orderId != null){
+            queries.put("order_id", this.orderId);
         }
         return queries;
     }
