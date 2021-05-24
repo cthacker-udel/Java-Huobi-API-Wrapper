@@ -21,6 +21,7 @@ import Controller.ServerAPI.ServerStatus.ServerStatus;
 import Controller.ServerAPI.ServerStatus.ServerTimestamp;
 import Controller.TradeAPI.BatchOrder.BatchOrder;
 import Controller.TradeAPI.CancelOrder.CancelOrder;
+import Controller.TradeAPI.OrderInfo.OrderInfo;
 import Controller.TradeAPI.PlaceOrder.PlaceOrder;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -536,6 +537,32 @@ public class HuobiRestAPI {
 
 
     }
+
+
+    public OrderInfo getOrderInformation(HuobiClient client) throws IOException {
+
+        String url = baseUrl + "/swap-api/v1/swap_order_info";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        tradeInterface tradeInterface = retrofit.create(InterfaceModel.tradeInterface.class);
+
+        TreeMap<String,Object> queries = client.getTrade().generateQueries();
+
+        queries.put("signature",client.getAuth().createSignature("POST","https://api.hbdm.com/swap-api/v1/swap_order_info",queries));
+
+        Call<OrderInfo> call = tradeInterface.getOrderInfo(queries);
+
+        Response<OrderInfo> response = call.execute();
+
+        return response.body();
+
+    }
+
+
 
 
 
